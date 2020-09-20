@@ -49,7 +49,7 @@ function App() {
 
   if (error) {
     console.error("***", error);
-    return <h1>Something went wrong!</h1>;
+  return <h1>Error: {error["message"]}! </h1>;
   }
   if (loading) return <h1>Loading...</h1>;
 
