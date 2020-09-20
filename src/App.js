@@ -13,7 +13,6 @@ const GET_BOOKS = gql`
   }
 `;
 
-
 class Book extends Component {
   constructor() {
     super();
@@ -44,24 +43,38 @@ class Book extends Component {
   }
 }
 
+class Books extends Component {
+  constructor(props) {
+    super();
+    this.props = { books: [] };
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.books.map((book) => (
+          <div>
+            <Book key={book.author} book={book} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
 function App() {
   const { loading, error, data } = useQuery(GET_BOOKS);
 
   if (error) {
     console.error("***", error);
-  return <h1>Error: {error["message"]}! </h1>;
+    return <h1>Error: {error["message"]}! </h1>;
   }
   if (loading) return <h1>Loading...</h1>;
 
   return (
     <main className="App">
       <h1>D-Arcade Books</h1>
-      {data.books.map((book) => (
-        <div>
-          {/*<Book key={book.author} book={book} />*/}
-          <Book key={book.author} book={book} />
-        </div>
-      ))}
+      <Books books = {data.books}/>
     </main>
   );
 }
